@@ -5,14 +5,14 @@
 const secciones = document.querySelectorAll("section");
 
 function ocultarSecciones() {
-secciones.forEach(seccion => {
-seccion.style.display = "none";
-});
+    secciones.forEach(seccion => {
+        seccion.style.display = "none";
+    });
 }
 
 function mostrarSeccion(id) {
-ocultarSecciones();
-document.getElementById(id).style.display = "block";
+    ocultarSecciones();
+    document.getElementById(id).style.display = "block";
 }
 
 mostrarSeccion("inicio");
@@ -154,7 +154,6 @@ const nombreEstudiante = document.getElementById("nombreEstudiante");
 
 btnIniciar.addEventListener("click", () => {
 
-```
 const nombre = document.getElementById("nombre").value.trim();
 const apellidos = document.getElementById("apellidos").value.trim();
 
@@ -171,7 +170,6 @@ nombreEstudiante.textContent =
 
 mostrarPregunta();
 iniciarTemporizador();
-```
 
 });
 
@@ -181,29 +179,26 @@ iniciarTemporizador();
 
 function mostrarPregunta(){
 
-```
 const pregunta = preguntas[indicePregunta];
 
 let html = `
-    <h3>Pregunta ${indicePregunta + 1} de ${preguntas.length}</h3>
-    <p>${pregunta.pregunta}</p>
+<h3>Pregunta ${indicePregunta + 1} de ${preguntas.length}</h3>
+<p>${pregunta.pregunta}</p>
 `;
 
 pregunta.opciones.forEach((opcion,index)=>{
 
-    html += `
-    <label>
-        <input type="radio"
-        name="respuesta"
-        value="${index}">
-        ${opcion}
-    </label>
-    <br><br>
-    `;
+html += `
+<label>
+<input type="radio" name="respuesta" value="${index}">
+${opcion}
+</label>
+<br><br>
+`;
+
 });
 
 contenedorPregunta.innerHTML = html;
-```
 
 }
 
@@ -213,27 +208,25 @@ contenedorPregunta.innerHTML = html;
 
 btnSiguiente.addEventListener("click",()=>{
 
-```
 const respuesta =
 document.querySelector('input[name="respuesta"]:checked');
 
 if(!respuesta){
-    alert("Selecciona una respuesta.");
-    return;
+alert("Selecciona una respuesta.");
+return;
 }
 
 if(parseInt(respuesta.value) === preguntas[indicePregunta].correcta){
-    puntaje++;
+puntaje++;
 }
 
 indicePregunta++;
 
 if(indicePregunta < preguntas.length){
-    mostrarPregunta();
+mostrarPregunta();
 }else{
-    finalizarExamen();
+finalizarExamen();
 }
-```
 
 });
 
@@ -243,23 +236,21 @@ if(indicePregunta < preguntas.length){
 
 function iniciarTemporizador(){
 
-```
 temporizador = setInterval(()=>{
 
-    tiempo--;
+tiempo--;
 
-    let minutos = Math.floor(tiempo / 60);
-    let segundos = tiempo % 60;
+let minutos = Math.floor(tiempo / 60);
+let segundos = tiempo % 60;
 
-    tiempoTexto.textContent =
-    `Tiempo restante: ${String(minutos).padStart(2,"0")}:${String(segundos).padStart(2,"0")}`;
+tiempoTexto.textContent =
+`Tiempo restante: ${String(minutos).padStart(2,"0")}:${String(segundos).padStart(2,"0")}`;
 
-    if(tiempo <= 0){
-        finalizarExamen();
-    }
+if(tiempo <= 0){
+finalizarExamen();
+}
 
 },1000);
-```
 
 }
 
@@ -269,7 +260,6 @@ temporizador = setInterval(()=>{
 
 function finalizarExamen(){
 
-```
 clearInterval(temporizador);
 
 areaExamen.style.display = "none";
@@ -290,17 +280,16 @@ document.getElementById("resultadoPuntaje").textContent =
 let mensaje = "";
 
 if(puntaje >= 9){
-    mensaje = "🌟 Excelente";
+mensaje = "🌟 Excelente";
 }
 else if(puntaje >= 6){
-    mensaje = "👍 Bueno";
+mensaje = "👍 Bueno";
 }
 else{
-    mensaje = "📚 Debes estudiar más";
+mensaje = "📚 Debes estudiar más";
 }
 
 document.getElementById("mensajeFinal").textContent =
 mensaje;
-```
 
 }
