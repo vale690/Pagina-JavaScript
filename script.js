@@ -43,3 +43,8 @@ botones[4].addEventListener("click", () => {
 botones[5].addEventListener("click", () => {
     mostrarSeccion("examen");
 });
+const btnIniciar = document.getElementById("btnIniciar");
+
+btnIniciar.addEventListener("click", () => {
+    alert("La prueba iniciará próximamente.");
+});
