@@ -1,146 +1,306 @@
-// Seleccionar todas las secciones
+// ======================
+// MENÚ DE NAVEGACIÓN
+// ======================
+
 const secciones = document.querySelectorAll("section");
 
-// Ocultar todas las secciones
 function ocultarSecciones() {
-    secciones.forEach(seccion => {
-        seccion.style.display = "none";
-    });
+secciones.forEach(seccion => {
+seccion.style.display = "none";
+});
 }
 
-// Mostrar una sección
 function mostrarSeccion(id) {
-    ocultarSecciones();
-    document.getElementById(id).style.display = "block";
+ocultarSecciones();
+document.getElementById(id).style.display = "block";
 }
 
-// Mostrar Inicio al cargar la página
 mostrarSeccion("inicio");
 
-// Botones del menú
 const botones = document.querySelectorAll(".menu button");
 
-botones[0].addEventListener("click", () => {
-    mostrarSeccion("inicio");
-});
+botones[0].addEventListener("click", () => mostrarSeccion("inicio"));
+botones[1].addEventListener("click", () => mostrarSeccion("conceptos"));
+botones[2].addEventListener("click", () => mostrarSeccion("caracteristicas"));
+botones[3].addEventListener("click", () => mostrarSeccion("funciones"));
+botones[4].addEventListener("click", () => mostrarSeccion("tabla"));
+botones[5].addEventListener("click", () => mostrarSeccion("examen"));
 
-botones[1].addEventListener("click", () => {
-    mostrarSeccion("conceptos");
-});
+// ======================
+// PREGUNTAS DEL EXAMEN
+// ======================
 
-botones[2].addEventListener("click", () => {
-    mostrarSeccion("caracteristicas");
-});
-
-botones[3].addEventListener("click", () => {
-    mostrarSeccion("funciones");
-});
-
-botones[4].addEventListener("click", () => {
-    mostrarSeccion("tabla");
-});
-
-botones[5].addEventListener("click", () => {
-    mostrarSeccion("examen");
-});
-
-// BOTÓN INICIAR PRUEBA
-const btnIniciar = document.getElementById("btnIniciar");
-
-// Preguntas
 const preguntas = [
 {
-pregunta: "¿Qué permite almacenar información en JavaScript?",
-opciones: ["Eventos", "Funciones", "Variables", "Alertas"],
-correcta: 2
+pregunta:"¿Qué permite almacenar información en JavaScript?",
+opciones:["Evento","Función","Variable","Alert"],
+correcta:2
 },
 {
-pregunta: "¿Qué es una función en JavaScript?",
-opciones: ["Un navegador", "Un bloque de código que realiza una tarea específica", "Una imagen", "Un archivo HTML"],
-correcta: 1
+pregunta:"¿Qué son las funciones en JavaScript?",
+opciones:[
+"Programas antivirus",
+"Bloques de código que realizan una tarea específica",
+"Imágenes",
+"Navegadores"
+],
+correcta:1
 },
 {
-pregunta: "¿Cuál es la función de los eventos en JavaScript?",
-opciones: ["Cambiar colores", "Detectar acciones del usuario", "Crear tablas", "Guardar imágenes"],
-correcta: 1
+pregunta:"¿Para qué sirven los eventos?",
+opciones:[
+"Para guardar archivos",
+"Para responder a acciones del usuario",
+"Para crear carpetas",
+"Para instalar programas"
+],
+correcta:1
 },
 {
-pregunta: "¿Para qué sirven los condicionales?",
-opciones: ["Mostrar imágenes", "Crear botones", "Tomar decisiones según una condición", "Cerrar la página"],
-correcta: 2
+pregunta:"¿Qué permiten hacer los condicionales?",
+opciones:[
+"Crear imágenes",
+"Tomar decisiones según una condición",
+"Abrir navegadores",
+"Guardar videos"
+],
+correcta:1
 },
 {
-pregunta: "¿Qué hace la función alert()?",
-opciones: ["Reproduce videos", "Muestra mensajes emergentes", "Guarda datos", "Cambia el fondo"],
-correcta: 1
+pregunta:"¿Qué hace la función alert()?",
+opciones:[
+"Elimina archivos",
+"Muestra mensajes emergentes",
+"Cierra la página",
+"Crea imágenes"
+],
+correcta:1
 },
 {
-pregunta: "¿Qué es JavaScript?",
-opciones: ["Un sistema operativo", "Un lenguaje de programación", "Un navegador web", "Una base de datos"],
-correcta: 1
+pregunta:"¿Qué es JavaScript?",
+opciones:[
+"Un lenguaje de programación",
+"Un sistema operativo",
+"Un navegador",
+"Una base de datos"
+],
+correcta:0
 },
 {
-pregunta: "¿Dónde se ejecuta JavaScript principalmente?",
-opciones: ["En el navegador del usuario", "En una impresora", "En una calculadora", "En un PDF"],
-correcta: 0
+pregunta:"¿Dónde se ejecuta JavaScript?",
+opciones:[
+"En el navegador web",
+"En la impresora",
+"En el teclado",
+"En el monitor"
+],
+correcta:0
 },
 {
-pregunta: "¿Con qué tecnologías trabaja JavaScript?",
-opciones: ["Word y Excel", "HTML y CSS", "Paint y Photoshop", "Windows y Linux"],
-correcta: 1
+pregunta:"¿Con qué tecnologías trabaja JavaScript?",
+opciones:[
+"Word y Excel",
+"Paint y Bloc de notas",
+"HTML y CSS",
+"Windows y Linux"
+],
+correcta:2
 },
 {
-pregunta: "¿Cuál es una característica importante de JavaScript?",
-opciones: ["Crear páginas dinámicas e interactivas", "Imprimir documentos", "Diseñar edificios", "Crear videojuegos 3D"],
-correcta: 0
+pregunta:"¿Para qué sirve JavaScript en una página web?",
+opciones:[
+"Para hacerla interactiva",
+"Para apagar el computador",
+"Para imprimir documentos",
+"Para crear carpetas"
+],
+correcta:0
 },
 {
-pregunta: "¿Qué permite hacer JavaScript en una página web?",
-opciones: ["Solo mostrar texto", "Crear páginas dinámicas e interactivas", "Instalar programas", "Formatear discos"],
-correcta: 1
+pregunta:"¿Qué permite hacer JavaScript?",
+opciones:[
+"Responder a las acciones del usuario",
+"Formatear discos",
+"Reparar hardware",
+"Instalar sistemas operativos"
+],
+correcta:0
 }
 ];
 
-let preguntaActual = 0;
+// ======================
+// VARIABLES
+// ======================
 
-// Iniciar examen
+let indicePregunta = 0;
+let puntaje = 0;
+let tiempo = 600;
+let temporizador;
+
+const btnIniciar = document.getElementById("btnIniciar");
+const btnSiguiente = document.getElementById("btnSiguiente");
+
+const inicioExamen = document.getElementById("inicioExamen");
+const areaExamen = document.getElementById("areaExamen");
+const resultado = document.getElementById("resultado");
+
+const contenedorPregunta = document.getElementById("contenedorPregunta");
+const tiempoTexto = document.getElementById("tiempo");
+const nombreEstudiante = document.getElementById("nombreEstudiante");
+
+// ======================
+// INICIAR EXAMEN
+// ======================
+
 btnIniciar.addEventListener("click", () => {
-    mostrarPregunta();
+
+```
+const nombre = document.getElementById("nombre").value.trim();
+const apellidos = document.getElementById("apellidos").value.trim();
+
+if(nombre === "" || apellidos === ""){
+    alert("Debes escribir nombre y apellido.");
+    return;
+}
+
+inicioExamen.style.display = "none";
+areaExamen.style.display = "block";
+
+nombreEstudiante.textContent =
+"Estudiante: " + nombre + " " + apellidos;
+
+mostrarPregunta();
+iniciarTemporizador();
+```
+
 });
 
-// Mostrar pregunta
-function mostrarPregunta() {
+// ======================
+// MOSTRAR PREGUNTA
+// ======================
 
-    const area = document.getElementById("areaExamen");
+function mostrarPregunta(){
 
-    const p = preguntas[preguntaActual];
+```
+const pregunta = preguntas[indicePregunta];
 
-    area.innerHTML = `
-        <h3>Pregunta ${preguntaActual + 1} de 10</h3>
+let html = `
+    <h3>Pregunta ${indicePregunta + 1} de ${preguntas.length}</h3>
+    <p>${pregunta.pregunta}</p>
+`;
 
-        <p>${p.pregunta}</p>
+pregunta.opciones.forEach((opcion,index)=>{
 
-        <label>
-            <input type="radio" name="respuesta">
-            ${p.opciones[0]}
-        </label>
-        <br><br>
-
-        <label>
-            <input type="radio" name="respuesta">
-            ${p.opciones[1]}
-        </label>
-        <br><br>
-
-        <label>
-            <input type="radio" name="respuesta">
-            ${p.opciones[2]}
-        </label>
-        <br><br>
-
-        <label>
-            <input type="radio" name="respuesta">
-            ${p.opciones[3]}
-        </label>
+    html += `
+    <label>
+        <input type="radio"
+        name="respuesta"
+        value="${index}">
+        ${opcion}
+    </label>
+    <br><br>
     `;
+});
+
+contenedorPregunta.innerHTML = html;
+```
+
+}
+
+// ======================
+// SIGUIENTE
+// ======================
+
+btnSiguiente.addEventListener("click",()=>{
+
+```
+const respuesta =
+document.querySelector('input[name="respuesta"]:checked');
+
+if(!respuesta){
+    alert("Selecciona una respuesta.");
+    return;
+}
+
+if(parseInt(respuesta.value) === preguntas[indicePregunta].correcta){
+    puntaje++;
+}
+
+indicePregunta++;
+
+if(indicePregunta < preguntas.length){
+    mostrarPregunta();
+}else{
+    finalizarExamen();
+}
+```
+
+});
+
+// ======================
+// TEMPORIZADOR
+// ======================
+
+function iniciarTemporizador(){
+
+```
+temporizador = setInterval(()=>{
+
+    tiempo--;
+
+    let minutos = Math.floor(tiempo / 60);
+    let segundos = tiempo % 60;
+
+    tiempoTexto.textContent =
+    `Tiempo restante: ${String(minutos).padStart(2,"0")}:${String(segundos).padStart(2,"0")}`;
+
+    if(tiempo <= 0){
+        finalizarExamen();
+    }
+
+},1000);
+```
+
+}
+
+// ======================
+// RESULTADO FINAL
+// ======================
+
+function finalizarExamen(){
+
+```
+clearInterval(temporizador);
+
+areaExamen.style.display = "none";
+resultado.style.display = "block";
+
+const nombre =
+document.getElementById("nombre").value;
+
+const apellidos =
+document.getElementById("apellidos").value;
+
+document.getElementById("resultadoNombre").textContent =
+nombre + " " + apellidos;
+
+document.getElementById("resultadoPuntaje").textContent =
+"Puntaje: " + puntaje + " / 10";
+
+let mensaje = "";
+
+if(puntaje >= 9){
+    mensaje = "🌟 Excelente";
+}
+else if(puntaje >= 6){
+    mensaje = "👍 Bueno";
+}
+else{
+    mensaje = "📚 Debes estudiar más";
+}
+
+document.getElementById("mensajeFinal").textContent =
+mensaje;
+```
+
 }
