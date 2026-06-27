@@ -239,3 +239,11 @@ display:inline;
 #inicioExamen li{
     margin-bottom:12px;
 }
+
+/* Párrafos justificados */
+#inicio p,
+#conceptos p,
+#funciones p,
+#resultado p{
+    text-align: justify;
+}
